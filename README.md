@@ -2,6 +2,11 @@
 
 This repository is a collection of work I did for a neural engineering course during Fall 2023. I have only posted this here for reference to the type of neural analysis projects I have done before. I appreciate discretion. 
 
+This homework introduces fundamental signal processing and image analysis techniques in MATLAB. The assignment begins by generating two sine waveforms: a basic sine wave A = sin(2π15t) and a distorted version B = sin(2π15t)^5. These waveforms are stored in a matrix along with their pointwise sum, product, and ratio. The resulting operations are visualized through subplots to highlight their differences in amplitude and shape. Next, three sine waves are plotted using different x-intervals (π spaced by 0.5, 0.1, and 0.01) to show how sampling resolution affects smoothness in waveform representation. Using hold on, the waves are overlaid with unique styles and then labeled appropriately.
+
+In part (c), an image file (tire.mat) is loaded and visualized using imagesc, which displays intensity values using color mapping. A specific 3x2 sub-matrix is extracted and displayed to practice matrix indexing. In part (d), square waves are synthesized by thresholding sine waves: values above or below zero are replaced with ±1. This is based on Fourier theory, which shows that square waves can be approximated using sine components. Three plots compare 20 Hz and 30 Hz sine waves and the derived square wave.
+
+Finally, part (e) revisits the tire image. The mean pixel intensity is computed, and a binary mask is created to highlight pixels above this mean. This mask is applied to the image to isolate and visualize regions of high intensity. Although the final section contains some syntax issues (like quoting variable names or misusing strings), the intention is to display both the original and masked images side-by-side for comparison, reinforcing the concept of thresholding in image processing.
 Neural Signal Processing - Folder 3
 This repository contains MATLAB code for neural spike detection and analysis based on wideband neural recordings from 16 channels. The script performs the following tasks:
  - Loads neural signal data from 0900702VisuallyEvoked.mat.
@@ -24,6 +29,16 @@ The histogram provides a visual guide to selecting this threshold optimally.
 - Plots and saves pile plots of detected spikes.
 The script is useful for spike sorting and neural signal processing.
 
+Folder 5 
+In this assignment, we analyze multi-channel electrophysiological data collected during visually evoked stimulation, focusing on spike detection, snippet extraction, and component-based classification. The script begins by loading raw neural data (Wideband_data) and plotting the unfiltered signal from one channel to inspect baseline activity. A bandpass Butterworth filter (300–3000 Hz) is then applied to isolate spike-relevant frequencies, removing low-frequency LFPs and high-frequency noise. The signal is segmented into stimulus-aligned windows using timestamps from TrigON, and the filtered data is stored for further analysis.
+
+To detect spikes, the code defines a negative threshold based on the channel’s mean and standard deviation, marking voltage deflections that exceed this threshold. A binary raster matrix is constructed for each stimulation event, recording spike occurrences. From these rasters, snippets—brief segments of signal surrounding detected spikes—are extracted, focusing on channel 7. These snippets are then plotted to visualize waveform consistency.
+
+Subsequent analysis includes plotting a single spike snippet with a real-time x-axis (in milliseconds), and calculating minimum vs. maximum voltage values across all snippets to assess their shape characteristics. To reduce dimensionality and identify dominant waveform features, Principal Component Analysis (PCA) is performed via SVD. The explained variance plot helps determine how many components account for most of the variability. The first 25 PCA components are visualized, and the most informative 3 are selected for further clustering analysis.
+
+These components’ weights (W) are used to generate histograms and scatter plots, revealing clusters of spike waveforms, which may correspond to different neuronal units. Based on the third component, snippets are split into two clusters (unit 1 and unit 2), and their mean waveforms are compared. A raster plot visualizes spike activity for the full channel and each unit individually. To investigate temporal dynamics, the script calculates inter-spike intervals and generates autocorrelograms for each cluster, revealing refractory periods and firing patterns.
+
+Finally, k-means clustering is applied to the PCA component space to validate manual separation, and the resulting clusters are overlaid with waveform plots. This pipeline demonstrates essential spike sorting techniques—filtering, thresholding, PCA, clustering, and autocorrelation—providing a comprehensive overview of how to identify and characterize single-unit activity from multi-channel recordings in response to sensory stimuli.
 Neural Signal Processing - Folder 6
 This fold has MATLAB code for analyzing visually evoked neural signals. 
 Load neural data from 0900702VisuallyEvoked.mat.
